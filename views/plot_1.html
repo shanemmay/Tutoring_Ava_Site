@@ -27,7 +27,7 @@
                             <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="views/data.html">Data</a>
+                            <a class="nav-link" href="data.html">Data</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,6 +55,85 @@
         <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
     </div>
 
-    <!-- <script src="main.js"></script> -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../js/main.js"></script> 
+
+    lng & max temp
+    <div id="graph_1" style="width:600px;height:250px;"></div>
+    
+    <script>
+        console.log(data);
+
+        //getting lng max temp for first graph
+        let graph_1_data = [];
+        for(var i = 0; i < data.length; i++)
+        {
+            //graph_1_data[0].push(data[i].Lng);
+            //graph_1_data[1].push(data[i]["Max Temp"]);
+            graph_1_data[data[i].Lng] = data[i]["Max Temp"];
+        }
+        graph_1_data = graph_1_data.sort();
+        //console.log(graph_1_data);
+        
+        let x = Object.keys(graph_1_data);
+        let y = Object.values(graph_1_data);
+
+        let graph_1 = document.querySelector("#graph_1");
+        
+        Plotly.plot(
+            graph_1,
+            [{
+                x: x,
+                y: y
+            }],
+            {
+                margin: { t: 0 } 
+            }
+        );
+
+        Plotly.BUILD;
+    </script>
+
+    cloud & country
+    <div id="graph_2" style="width:600px;height:250px;"></div>
+    <script>
+        let graph_2_data = {};
+
+        for(var i = 0; i < data.length; i++)
+        {
+            let t1 = data[i]["Country"];
+            let t2 = data[i]["Cloudiness"];
+            // graph_2_data[i] = { };
+            // graph_2_data[i][""+t2] = t1;
+            graph_2_data[""+t2] = t1;
+        }
+         //graph_2_data = graph_2_data.sort();
+
+          /*let*/ x = Object.keys(graph_2_data).sort
+          ().reverse().splice(0,5);
+          /*let*/ y = Object.values(graph_2_data).sort().reverse().splice(0,5);
+
+          let graph_2 = document.querySelector("#graph_2");
+        
+        Plotly.plot(
+            graph_2,
+            [{
+                x: y,
+                y: x
+            }],
+            {
+                margin: { t: 0 } 
+            }
+        );
+
+        Plotly.BUILD;
+
+        
+        console.log(graph_2_data);
+        console.log(x);
+        console.log(y);
+
+    </script>
+
 </body>
 </html>
